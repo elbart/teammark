@@ -1,15 +1,36 @@
-setup:
-	yarn install
-	bash scripts/install_godeps.sh
+# Makefile for teammark
 
-dev-server: protocgen
-# for more information, see: https://webpack.github.io/docs/webpack-dev-server.html
-	yarn concurrently --kill-others "go run server/server.go" "yarn webpack-dev-server --content-base dist --colors --watch --hot --inline"
+SHELL := /bin/bash
+export BASE := $(shell /bin/pwd)
 
-webpack:
-	yarn webpack
+BUMPVERSION := $(shell /usr/bin/which bumpversion)
 
-protocgen:
-	bash scripts/protocgen.sh
+IMAGE_TAG := 1
 
-.PHONY: dev-server webpack setup protocgen
+.DEFAULT_GOAL := docker.run
+
+bumpversion.patch:
+	$(BUMPVERSION) patch
+
+bumpversion.minor:
+	$(BUMPVERSION) minor
+
+bumpversion.major:
+	$(BUMPVERSION) major
+
+.PHONY: docker.base
+docker.base:
+	docker build -t teammark-base -f Dockerfile-base .
+
+.PHONY: docker.app
+docker.app: docker.base
+	docker-compose build webapp
+	docker-compose build backend
+
+.PHONY: docker.run
+docker.run:
+	docker-compose up -d
+
+.PHONY: docker.rmcontainers
+docker.rmcontainers:
+	docker-compose rm

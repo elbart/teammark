@@ -1,8 +1,6 @@
 /**
  * @fileoverview
  * @enhanceable
- * @suppress {messageConventions} JS Compiler reports an error if a variable or
- *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -59,7 +57,6 @@ proto.notes.Note.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notes.Note} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notes.Note.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -124,40 +121,49 @@ proto.notes.Note.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.notes.Note} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.notes.Note.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notes.Note.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.notes.Note.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.notes.Note} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.notes.Note.serializeBinaryToWriter = function(message, writer) {
+proto.notes.Note.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getId();
+  f = this.getId();
   if (f !== 0) {
     writer.writeInt64(
       1,
       f
     );
   }
-  f = message.getBody();
+  f = this.getBody();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getAuthor();
+  f = this.getAuthor();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -255,7 +261,6 @@ proto.notes.AddNoteRequest.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notes.AddNoteRequest} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notes.AddNoteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -315,33 +320,42 @@ proto.notes.AddNoteRequest.deserializeBinaryFromReader = function(msg, reader) {
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.notes.AddNoteRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.notes.AddNoteRequest.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notes.AddNoteRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.notes.AddNoteRequest.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.notes.AddNoteRequest} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.notes.AddNoteRequest.serializeBinaryToWriter = function(message, writer) {
+proto.notes.AddNoteRequest.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getBody();
+  f = this.getBody();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getAuthor();
+  f = this.getAuthor();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -424,7 +438,6 @@ proto.notes.GetNotesRequest.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.notes.GetNotesRequest} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notes.GetNotesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -475,24 +488,33 @@ proto.notes.GetNotesRequest.deserializeBinaryFromReader = function(msg, reader) 
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.notes.GetNotesRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.notes.GetNotesRequest.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notes.GetNotesRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.notes.GetNotesRequest.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.notes.GetNotesRequest} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.notes.GetNotesRequest.serializeBinaryToWriter = function(message, writer) {
+proto.notes.GetNotesRequest.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
 };
 
@@ -547,7 +569,6 @@ proto.notes.GetNotesResponse.prototype.toObject = function(opt_includeInstance) 
  *     http://goto/soy-param-migration
  * @param {!proto.notes.GetNotesResponse} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notes.GetNotesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -604,26 +625,35 @@ proto.notes.GetNotesResponse.deserializeBinaryFromReader = function(msg, reader)
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.notes.GetNotesResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.notes.GetNotesResponse.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notes.GetNotesResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.notes.GetNotesResponse.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.notes.GetNotesResponse} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.notes.GetNotesResponse.serializeBinaryToWriter = function(message, writer) {
+proto.notes.GetNotesResponse.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getNotesList();
+  f = this.getNotesList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       1,
@@ -636,6 +666,8 @@ proto.notes.GetNotesResponse.serializeBinaryToWriter = function(message, writer)
 
 /**
  * repeated Note notes = 1;
+ * If you change this array by adding, removing or replacing elements, or if you
+ * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.notes.Note>}
  */
 proto.notes.GetNotesResponse.prototype.getNotesList = function() {
@@ -708,7 +740,6 @@ proto.notes.DeleteNoteRequest.prototype.toObject = function(opt_includeInstance)
  *     http://goto/soy-param-migration
  * @param {!proto.notes.DeleteNoteRequest} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.notes.DeleteNoteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -763,26 +794,35 @@ proto.notes.DeleteNoteRequest.deserializeBinaryFromReader = function(msg, reader
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.notes.DeleteNoteRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.notes.DeleteNoteRequest.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.notes.DeleteNoteRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.notes.DeleteNoteRequest.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.notes.DeleteNoteRequest} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.notes.DeleteNoteRequest.serializeBinaryToWriter = function(message, writer) {
+proto.notes.DeleteNoteRequest.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getId();
+  f = this.getId();
   if (f !== 0) {
     writer.writeInt64(
       1,

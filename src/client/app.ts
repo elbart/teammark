@@ -9,7 +9,7 @@ import Component from 'vue-class-component'
 })
 export default class Teammark extends Vue {
   notes: Array<Note> = [];
-  host: string = 'http://localhost:9090'
+  host: string = 'http://localhost:8001'
   body: string = '';
   author: string = '';
 

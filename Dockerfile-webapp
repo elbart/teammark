@@ -1,0 +1,11 @@
+FROM teammark-base:latest
+
+WORKDIR /app
+RUN cp -r /tmp/app/node_modules /app
+
+VOLUME ["/app"]
+
+ENV GOPATH=/root/go
+EXPOSE 8080
+
+CMD ["make", "webapp.run"]

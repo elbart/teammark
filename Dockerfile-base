@@ -1,0 +1,8 @@
+FROM alpine:latest
+
+RUN apk add --no-cache go protobuf make yarn bash git g++
+
+WORKDIR /tmp/app
+COPY ./src /tmp/app
+RUN yarn install
+RUN bash scripts/install_godeps.sh

@@ -1,0 +1,10 @@
+FROM teammark-base:latest
+
+WORKDIR /app
+
+VOLUME ["/app"]
+
+ENV GOPATH=/root/go
+EXPOSE 9090
+
+CMD ["make", "backend.run"]

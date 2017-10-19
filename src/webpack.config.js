@@ -25,7 +25,8 @@ module.exports = {
     contentBase: './dist',
     hot: true,
     inline: true,
-    port: 8080
+    port: 8080,
+    host: '0.0.0.0'
   },
   devtool: '#eval-source-map',
   output: {

@@ -1,19 +1,22 @@
 package main
 
 import (
-	library "./_proto"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/grpclog"
-	"google.golang.org/grpc/metadata"
-	"os"
-	"log"
-	"github.com/improbable-eng/grpc-web/go/grpcweb"
-	"net/http"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
 	"sync"
 	"sync/atomic"
+
+	library "./_proto"
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/grpclog"
+	"google.golang.org/grpc/metadata"
+
+	r "gopkg.in/gorethink/gorethink.v3"
 )
 
 var (
@@ -25,36 +28,62 @@ var (
 
 	// atomicly load and increment NOTE_INDEX to serve as a unique key
 	NOTE_INDEX int64 = 3
-	NOTES = map[int64]*library.Note {
-		1: &library.Note{ Id: 1, Author: "Ben", Body: "First Note" },
-		2: &library.Note{ Id: 2, Author: "Ben", Body: "Second Note" },
-		3: &library.Note{ Id: 3, Author: "Ben", Body: "Third Note" },
+	NOTES            = map[int64]*library.Note{
+		1: &library.Note{Id: 1, Author: "Ben", Body: "First Note"},
+		2: &library.Note{Id: 2, Author: "Ben", Body: "Second Note"},
+		3: &library.Note{Id: 3, Author: "Ben", Body: "Third Note"},
 	}
 )
 
-func main(){
+func main() {
 	grpcServer := grpc.NewServer()
 	library.RegisterNoteServiceServer(grpcServer, &noteService{})
 	grpclog.SetLogger(log.New(os.Stdout, "GRPC:", log.LstdFlags))
 
 	wrappedServer := grpcweb.WrapServer(grpcServer)
 
-	handler := func(res http.ResponseWriter, req *http.Request){
+	handler := func(res http.ResponseWriter, req *http.Request) {
 		wrappedServer.ServeHTTP(res, req)
 	}
 
 	httpServer := &http.Server{
-		Addr: fmt.Sprintf(":%d", PORT),
+		Addr:    fmt.Sprintf(":%d", PORT),
 		Handler: http.HandlerFunc(handler),
 	}
+
+	connectDb()
 
 	grpclog.Println("Starting server...")
 	log.Fatalln(httpServer.ListenAndServe())
 }
 
-type noteService struct {}
+func connectDb() {
+	url := "db:28015"
+	session, err := r.Connect(r.ConnectOpts{
+		Address: url,
+	})
 
-func (ns *noteService) AddNote(ctx context.Context, req *library.AddNoteRequest)(*library.Note, error){
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	res, err := r.Expr("Hello World").Run(session)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	var response string
+	err = res.One(&response)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	fmt.Println(response)
+}
+
+type noteService struct{}
+
+func (ns *noteService) AddNote(ctx context.Context, req *library.AddNoteRequest) (*library.Note, error) {
 	grpc.SendHeader(ctx, metadata.Pairs("Pre-Response-Metadata", "Is-sent-as-headers-unary"))
 
 	NOTE_LOCK.Lock()
@@ -64,16 +93,16 @@ func (ns *noteService) AddNote(ctx context.Context, req *library.AddNoteRequest)
 	id := atomic.LoadInt64(&NOTE_INDEX)
 
 	note := &library.Note{
-		Id: id,
+		Id:     id,
 		Author: req.Author,
-		Body: req.Body,
+		Body:   req.Body,
 	}
 
 	NOTES[note.Id] = note
 	return note, nil
 }
 
-func (ns *noteService) GetNotes(ctx context.Context, req *library.GetNotesRequest)(*library.GetNotesResponse, error){
+func (ns *noteService) GetNotes(ctx context.Context, req *library.GetNotesRequest) (*library.GetNotesResponse, error) {
 	grpc.SendHeader(ctx, metadata.Pairs("Pre-Response-Metadata", "Is-sent-as-headers-unary"))
 
 	NOTE_LOCK.RLock()
@@ -87,11 +116,11 @@ func (ns *noteService) GetNotes(ctx context.Context, req *library.GetNotesReques
 		idx++
 	}
 
-	resp := &library.GetNotesResponse{ Notes: notes }
+	resp := &library.GetNotesResponse{Notes: notes}
 	return resp, nil
 }
 
-func (ns *noteService) DeleteNote(ctx context.Context, req *library.DeleteNoteRequest) (*library.Note, error){
+func (ns *noteService) DeleteNote(ctx context.Context, req *library.DeleteNoteRequest) (*library.Note, error) {
 	grpc.SendHeader(ctx, metadata.Pairs("Pre-Response-Metadata", "Is-sent-as-headers-unary"))
 
 	NOTE_LOCK.Lock()
@@ -99,9 +128,9 @@ func (ns *noteService) DeleteNote(ctx context.Context, req *library.DeleteNoteRe
 
 	if oldNote, exists := NOTES[req.Id]; exists {
 		note := &library.Note{
-			Id: oldNote.Id,
+			Id:     oldNote.Id,
 			Author: oldNote.Author,
-			Body: oldNote.Body,
+			Body:   oldNote.Body,
 		}
 
 		delete(NOTES, req.Id)
